@@ -47,6 +47,8 @@ class Character extends FunkinSprite implements IBeatReceiver implements IOffset
 	public var iconColor:Null<FlxColor> = null;
 	public var gameOverCharacter:String = Character.FALLBACK_DEAD_CHARACTER;
 
+	// need a better name for ts variable
+	public var topLeftCamera:Bool = false;
 	public var cameraOffset:FlxPoint = FlxPoint.get(0, 0);
 	public var globalOffset:FlxPoint = FlxPoint.get(0, 0);
 	public var extraOffset:FlxPoint = FlxPoint.get(0, 0);
@@ -300,7 +302,7 @@ class Character extends FunkinSprite implements IBeatReceiver implements IOffset
 	}
 
 	public inline function getCameraPosition() {
-		var midpoint:FlxPoint = getMidpoint();
+		var midpoint:FlxPoint = topLeftCamera ? FlxPoint.get(x, y) : getMidpoint();
 		var event = EventManager.get(PointEvent).recycle(
 			midpoint.x + (isPlayer ? -100 : 150) + globalOffset.x + cameraOffset.x,
 			midpoint.y - 100 + globalOffset.y + cameraOffset.y);
@@ -365,7 +367,9 @@ class Character extends FunkinSprite implements IBeatReceiver implements IOffset
 
 		xml = scripts.event("onCharacterXMLParsed", EventManager.get(CharacterXMLEvent).recycle(this, xml)).xml;
 
-		sprite = curCharacter;
+		// added name because of the default sheet,
+		// but it can also double as a shortcut to curCharacter! maybe
+		name = sprite = curCharacter;
 		spriteAnimType = BEAT;
 		this.xml = xml; // Modders wassup :D
 
@@ -405,7 +409,10 @@ class Character extends FunkinSprite implements IBeatReceiver implements IOffset
 		var hasInterval:Bool = xml.x.exists("interval");
 		if (hasInterval) beatInterval = Std.parseInt(xml.x.get("interval"));
 
-		loadSprite(Paths.image('characters/$sprite'));
+		XMLUtil.appendSpriteSheetsFromXML(this, xml, 'characters/');
+		if (xml.x.exists("topLeftCamera")) topLeftCamera = (xml.x.get("topLeftCamera") == "true");
+		else topLeftCamera = (frames is FlxAnimateFrames);
+
 		for(node in xml.elements) {
 			switch(node.name) {
 				case "anim":

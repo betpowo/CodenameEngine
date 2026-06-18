@@ -18,6 +18,7 @@ class MultiFramesCollection extends FlxFramesCollection
 {
 	public var parentedFrames:Array<FlxFramesCollection> = [];
 
+	@:deprecated('MultiFramesCollection is deprecated, use FlxAnimateFrames.combineAtlas')
 	public function new(parent:FlxGraphic, ?border:FlxPoint)
 	{
 		super(parent, USER("MULTI"), border);
