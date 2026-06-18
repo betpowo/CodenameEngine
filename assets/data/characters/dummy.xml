@@ -1,0 +1,22 @@
+<character sprite="bf" icon="face" color="#a1a1a1">
+	<anim name="idle" anim="BF idle dance" isAnimate="false"/>
+
+	<spritesheet path="characters/da"/>
+	<spritesheet path="characters/pico-speakers"/>
+	<!-- ↓↓↓↓↓ uses anim names of both sheets kinda like psych egine -->
+	<anim name="singLEFT" anim="dad sing note right" x="-10" y="10" fps="24" loop="false" isAnimate="false"/>
+	<anim name="singDOWN" anim="Pico shoot 1" x="2" y="-31" fps="24" loop="false"/>
+	<anim name="singUP" anim="Pico shoot 2" x="-10" y="50" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="Dad Sing Note LEFT" x="-4" y="26" fps="24" loop="false" isAnimate="false"/>
+	
+
+	<!-- default sheet can coexist -->
+	<anim name="hit" anim="BF hit" isAnimate="false"/>
+	<!--
+		no, this should not be used as "change character",
+		its just an example to load das sheet in any other char
+
+		no longer needing dummy/1.png and 2.png !!!
+		although backwards compat is available
+	-->
+</character>
